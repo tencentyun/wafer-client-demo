@@ -1,0 +1,2 @@
+<button bindtap="doLogin">登录</button>
+<button bindtap="doRequest">请求</button>

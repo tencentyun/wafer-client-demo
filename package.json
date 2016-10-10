@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "qcloud-weapp-client-sdk": "^0.2.0"
+    "qcloud-weapp-client-sdk": "^0.3.0"
   },
   "devDependencies": {},
   "repository": {

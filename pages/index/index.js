@@ -3,13 +3,12 @@ var qcloud = require('../../node_modules/qcloud-weapp-client-sdk/index.js');
 Page({
     data: {
         loginUrl: 'https://www.qcloud.la/login',
-        requestUrl: 'https://www.qcloud.la/user'
+        requestUrl: 'https://www.qcloud.la/user',
     },
 
     doLogin: function () {
         qcloud.setLoginUrl(this.data.loginUrl);
         qcloud.login({
-
             success: function () {
                 console.log('login success', arguments);
             },

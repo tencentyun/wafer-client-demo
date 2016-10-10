@@ -4,7 +4,7 @@
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#f3f3f3",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"black"
   }

@@ -1,2 +1,12 @@
-<button bindtap="doLogin">登录</button>
-<button bindtap="doRequest">请求</button>
+<view class="root">
+    <view class="line">
+        <text>登录测试</text>
+        <input type="text" value="{{loginUrl}}" bindchange="changeLoginUrl"></input>
+        <button bindtap="doLogin" type="primary">登录</button>
+    </view>
+    <view class="line">
+        <text>请求测试</text>
+        <input type="text" value="{{requestUrl}}" bindchange="changeRequestUrl"></input>
+        <button bindtap="doRequest" type="primary">请求</button>
+    </view>
+</view>

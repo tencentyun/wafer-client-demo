@@ -1,13 +1,13 @@
 <view class="root">
     <view class="line">
         <text>登录测试</text>
-        <input type="text" value="{{loginUrl}}" bindchange="changeLoginUrl" disabled></input>
+        <input type="text" value="{{loginUrl}}" disabled></input>
         <button bindtap="doLogin" type="primary">登录</button>
         <button bindtap="clearSession">清除登录会话</button>
     </view>
     <view class="line">
         <text>请求测试</text>
-        <input type="text" value="{{requestUrl}}" bindchange="changeRequestUrl" disabled></input>
+        <input type="text" value="{{requestUrl}}" disabled></input>
         <button bindtap="doRequest" type="primary">请求</button>
     </view>
     <view class="line">

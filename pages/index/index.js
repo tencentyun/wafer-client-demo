@@ -10,7 +10,6 @@ Page({
     doLogin: function () {
         qcloud.setLoginUrl(this.data.loginUrl);
         qcloud.login({
-
             success: function () {
                 console.log('login success', arguments);
             },

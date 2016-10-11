@@ -3,7 +3,8 @@ var qcloud = require('../../node_modules/qcloud-weapp-client-sdk/index.js');
 Page({
     data: {
         loginUrl: 'https://www.qcloud.la/login',
-        requestUrl: 'https://www.qcloud.la/user'
+        requestUrl: 'https://www.qcloud.la/user',
+        tunnelServiceUrl: 'https://www.qcloud.la/tunnel'
     },
 
     doLogin: function () {
@@ -42,4 +43,38 @@ Page({
             }
         });
     },
+
+    openTunnel: function() {
+        qcloud.setLoginUrl(this.data.loginUrl);
+        var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelServiceUrl);
+        tunnel.open();
+        tunnel.on('*', function(type, args) {
+            switch(type) {
+                case 'connect':
+                    console.log('连接已建立');
+                    break;
+                case 'close':
+                    console.log('连接已断开');
+                    break;
+                case 'reconnecting':
+                    console.log('正在重连');
+                    break;
+                case 'reconnect':
+                    console.log('重连成功');
+                    break;
+                case 'error':
+                    console.error(args);
+                    break;
+                default:
+                    console.log(type, args);
+                    break;
+            }
+        });
+    },
+
+    closeTunnel: function() {
+        if (this.tunnel) {
+            this.tunnel.close();
+        }
+    }
 });

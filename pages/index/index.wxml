@@ -14,6 +14,7 @@
         <text>信道服务测试</text>
         <input type="text" value="{{tunnelServiceUrl}}" disabled />
         <button bindtap="openTunnel" type="primary">打开信道</button>
+        <button bindtap="sendMessage">发送消息</button>
         <button bindtap="closeTunnel">关闭信道</button>
     </view>
 </view>

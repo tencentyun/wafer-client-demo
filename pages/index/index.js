@@ -20,7 +20,7 @@ Page({
         });
     },
 
-    clearSession: function() {
+    clearSession: function () {
         wx.clearStorageSync();
     },
 
@@ -43,11 +43,11 @@ Page({
         });
     },
 
-    openTunnel: function() {
+    openTunnel: function () {
         qcloud.setLoginUrl(this.data.loginUrl);
         var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelServiceUrl);
         tunnel.open();
-        tunnel.on('*', function(type, args) {
+        tunnel.on('*', function (type, args) {
             switch(type) {
             case 'connect':
                 console.log('连接已建立');
@@ -71,9 +71,17 @@ Page({
         });
     },
 
-    closeTunnel: function() {
+    closeTunnel: function () {
         if (this.tunnel) {
             this.tunnel.close();
+        }
+    },
+
+    sendMessage: function () {
+        if (this.tunnel) {
+            this.tunnel.emit('speak', {
+                'word': Math.random().toString(32).slice(2),
+            });
         }
     },
 });

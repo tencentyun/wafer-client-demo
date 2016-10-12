@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "dependencies": {
-    "qcloud-weapp-client-sdk": "^0.4.2"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "http://github.com/CFETeam/qcloud-weapp-client-demo.git"

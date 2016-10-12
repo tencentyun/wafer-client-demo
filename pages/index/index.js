@@ -1,4 +1,4 @@
-var qcloud = require('../../node_modules/qcloud-weapp-client-sdk/index.js');
+var qcloud = require('../../bower_components/qcloud-weapp-client-sdk/index.js');
 
 Page({
     data: {

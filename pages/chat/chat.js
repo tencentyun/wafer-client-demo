@@ -14,7 +14,7 @@ function createUserMessage(content, user, me) {
 Page({
     data: {
         messages: [],
-        inputContent: '大家好啊'
+        inputContent: '大家好啊',
     },
 
     onShow() {
@@ -62,26 +62,26 @@ Page({
             this.pushMessage(createSystemMessage('您已退出群聊'));
         });
 
-        tunnel.on('*', function(type, args) {
+        tunnel.on('*', function (type, args) {
             switch(type) {
-                case 'connect':
-                    console.log('连接已建立');
-                    break;
-                case 'close':
-                    console.log('连接已断开');
-                    break;
-                case 'reconnecting':
-                    console.log('正在重连');
-                    break;
-                case 'reconnect':
-                    console.log('重连成功');
-                    break;
-                case 'error':
-                    console.error(args);
-                    break;
-                default:
-                    //console.log(type, args);
-                    break;
+            case 'connect':
+                console.log('连接已建立');
+                break;
+            case 'close':
+                console.log('连接已断开');
+                break;
+            case 'reconnecting':
+                console.log('正在重连');
+                break;
+            case 'reconnect':
+                console.log('重连成功');
+                break;
+            case 'error':
+                console.error(args);
+                break;
+            default:
+                //console.log(type, args);
+                break;
             }
         });
     },
@@ -107,10 +107,10 @@ Page({
     sendMessage(e) {
         setTimeout(() => {
             this.tunnel.emit('speak', {
-                who: this.me,
                 word: this.data.inputContent
             });
-            this.setData({ inputContent: "" })
+
+            this.setData({ inputContent: '' });
         });
-    }
+    },
 });

@@ -1,0 +1,18 @@
+<scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}">
+    <view wx:for="{{messages}}" wx:for-item="message" class="message {{message.type}}">
+        <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.me && 'me'}}">
+            <image class="avatar" src="{{message.user.avatarUrl}}" mode="aspectFill"></image>
+            <view class="text">
+                <view class="nickname">{{message.user.nickName}}</view>
+                <view class="content">{{message.content}}</view>
+            </view>
+        </view>
+        <view wx:if="{{message.type == 'system'}}" class="system-message">
+            {{message.content}}
+        </view>
+    </view>
+</scroll-view>
+<view class="input-panel">
+    <input type="text" value="{{inputContent}}" bindchange="changeInputContent"></input>
+    <button bindtap="sendMessage">发送</button>
+</view>

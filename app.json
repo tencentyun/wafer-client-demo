@@ -1,11 +1,11 @@
 {
   "pages":[
-    "pages/index/index"
+    "pages/chat/chat"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#f3f3f3",
+    "navigationBarBackgroundColor": "#333",
     "navigationBarTitleText": "SDK测试",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"white"
   }
 }

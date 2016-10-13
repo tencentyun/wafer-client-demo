@@ -23,6 +23,10 @@ Page({
         lastMessageId: 'none',
     },
 
+    onReady() {
+        wx.setNavigationBarTitle({ title: '三木聊天室' });
+    },
+
     onShow() {
         this.pushMessage(createSystemMessage('正在登陆...'));
         qcloud.setLoginUrl(config.service.loginUrl);
@@ -131,7 +135,7 @@ Page({
         setTimeout(() => {
             if (this.data.inputContent && this.tunnel) {
                 this.tunnel.emit('speak', { word: this.data.inputContent });
-                this.setData({ inputContent: "" })
+                this.setData({ inputContent: '' });
             }
         });
     },

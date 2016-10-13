@@ -3,18 +3,24 @@ var config = require('../../config');
 
 var githubHead = n => `https://avatars1.githubusercontent.com/u/${n}?v=3&s=160`;
 
+var nextMsgUuid = 0;
+function msgUuid() {
+    return 'msg_' + ++nextMsgUuid;
+}
+
 function createSystemMessage(content) {
-    return { type: 'system', content };
+    return { id: msgUuid(), type: 'system', content };
 }
 
 function createUserMessage(content, user, me) {
-    return { type: 'speak', content, user, me };
+    return { id: msgUuid(), type: 'speak', content, user, me };
 }
 
 Page({
     data: {
         messages: [],
-        inputContent: '大家好啊'
+        inputContent: '大家好啊',
+        lastMessageId: "none"
     },
 
     onShow() {
@@ -31,6 +37,12 @@ Page({
             });
         } else {
             this.connect();
+        }
+    },
+
+    onHide() {
+        if (this.tunnel) {
+            this.tunnel.close();
         }
     },
 
@@ -86,18 +98,25 @@ Page({
         });
     },
 
+    updateMessages(updater) {
+        var messages = this.data.messages;
+        updater(this.data.messages);
+        this.setData({
+            messages,
+            lastMessageId: messages.length && messages[messages.length - 1].id
+        });
+    },
+
     pushMessage(message) {
-        this.setData({ messages: this.data.messages.concat(message) });
+        this.updateMessages(messages => messages.push(message));
     },
 
     amendMessage(message) {
-        this.data.messages.splice(-1, 1, message);
-        this.setData({ messages: this.data.messages });
+        this.updateMessages(messages => messages.splice(-1, 1, message));
     },
 
     popMessage() {
-        this.data.messages.pop();
-        this.setData({ messages: this.data.messages });
+        this.updateMessages(messages => messages.pop());
     },
 
     changeInputContent(e) {
@@ -105,12 +124,15 @@ Page({
     },
 
     sendMessage(e) {
+        if (!this.tunnel || !this.tunnel.isActive()) {
+            this.pushMessage(createSystemMessage("您还没有加入群聊，请稍后重试"));
+            return;
+        }
         setTimeout(() => {
-            this.tunnel.emit('speak', {
-                who: this.me,
-                word: this.data.inputContent
-            });
-            this.setData({ inputContent: "" })
+            if (this.data.inputContent && this.tunnel) {
+                this.tunnel.emit('speak', { word: this.data.inputContent });
+                this.setData({ inputContent: "" })
+            }
         });
     }
 });

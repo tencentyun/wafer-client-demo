@@ -17,4 +17,5 @@
         <button bindtap="sendMessage">发送消息</button>
         <button bindtap="closeTunnel">关闭信道</button>
     </view>
+    <view class="chat"></view>
 </view>

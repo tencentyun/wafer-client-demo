@@ -20,7 +20,11 @@ Page({
     data: {
         messages: [],
         inputContent: '大家好啊',
-        lastMessageId: "none"
+        lastMessageId: 'none',
+    },
+
+    onReady() {
+        wx.setNavigationBarTitle({ title: '三木聊天室' });
     },
 
     onShow() {
@@ -84,24 +88,24 @@ Page({
 
         tunnel.on('*', function(type, args) {
             switch(type) {
-                case 'connect':
-                    console.log('连接已建立');
-                    break;
-                case 'close':
-                    console.log('连接已断开');
-                    break;
-                case 'reconnecting':
-                    console.log('正在重连');
-                    break;
-                case 'reconnect':
-                    console.log('重连成功');
-                    break;
-                case 'error':
-                    console.error(args);
-                    break;
-                default:
-                    //console.log(type, args);
-                    break;
+            case 'connect':
+                console.log('连接已建立');
+                break;
+            case 'close':
+                console.log('连接已断开');
+                break;
+            case 'reconnecting':
+                console.log('正在重连');
+                break;
+            case 'reconnect':
+                console.log('重连成功');
+                break;
+            case 'error':
+                console.error(args);
+                break;
+            default:
+                //console.log(type, args);
+                break;
             }
         });
     },
@@ -139,8 +143,8 @@ Page({
         setTimeout(() => {
             if (this.data.inputContent && this.tunnel) {
                 this.tunnel.emit('speak', { word: this.data.inputContent });
-                this.setData({ inputContent: "" })
+                this.setData({ inputContent: '' });
             }
         });
-    }
+    },
 });

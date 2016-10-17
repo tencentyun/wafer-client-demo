@@ -74,6 +74,14 @@ Page({
             this.pushMessage(createSystemMessage('您已退出群聊'));
         });
 
+        tunnel.on('reconnecting', () => {
+            this.pushMessage(createSystemMessage("已断线，正在重连..."));
+        });
+
+        tunnel.on('reconnect', () => {
+            this.amendMessage(createSystemMessage("重连成功"));
+        });
+
         tunnel.on('*', function(type, args) {
             switch(type) {
                 case 'connect':

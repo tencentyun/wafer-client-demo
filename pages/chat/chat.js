@@ -1,47 +1,92 @@
+/**
+ * @fileOverview 聊天室综合 Demo 示例
+ */
+
+
+// 引入 QCloud 小程序增强 SDK
 var qcloud = require('../../bower_components/qcloud-weapp-client-sdk/index');
+
+// 引入配置
 var config = require('../../config');
 
-var githubHead = n => `https://avatars1.githubusercontent.com/u/${n}?v=3&s=160`;
-
-var nextMsgUuid = 0;
+/** 
+ * 生成一条聊天室的消息的唯一 ID
+ */
 function msgUuid() {
-    return 'msg_' + ++nextMsgUuid;
+    if (!msgUuid.next) {
+        msgUuid.next = 0;
+    }
+    return 'msg_' + msgUuid.next;
 }
 
+/**
+ * 生成聊天室的系统消息
+ */
 function createSystemMessage(content) {
     return { id: msgUuid(), type: 'system', content };
 }
 
+/** 
+ * 生成聊天室的聊天消息
+ */
 function createUserMessage(content, user, me) {
     return { id: msgUuid(), type: 'speak', content, user, me };
 }
 
+// 声明聊天室页面
 Page({
+
+    /**
+     * 聊天室使用到的数据，主要是消息集合以及当前输入框的文本
+     */
     data: {
         messages: [],
         inputContent: '大家好啊',
         lastMessageId: 'none',
     },
 
+    /**
+     * 页面渲染完成后，启动聊天室
+     * */
     onReady() {
         wx.setNavigationBarTitle({ title: '三木聊天室' });
 
         if (!this.pageReady) {
             this.pageReady = true;
-            this.begin();
+            this.enter();
         }
     },
 
+    /**
+     * 后续后台切换回前台的时候，也要重新启动聊天室
+     */
     onShow() {
         if (this.pageReady) {
-            this.begin();
+            this.enter();
         }
     },
 
-    begin() {
-        this.pushMessage(createSystemMessage('正在登录...'));
-        qcloud.setLoginUrl(config.service.loginUrl);
+    /**
+     * 页面卸载时，退出聊天室
+     */
+    onUnload() {
+        this.quit();
+    },
 
+    /**
+     * 页面切换到后台运行时，退出聊天室
+     */
+    onHide() {
+        this.quit();
+    },
+
+    /**
+     * 启动聊天室
+     */
+    enter() {
+        this.pushMessage(createSystemMessage('正在登录...'));
+
+        // 如果登陆过，会记录当前用户在 this.me 上
         if (!this.me) {
             qcloud.request({
                 url: `https://${config.service.host}/user`,
@@ -56,24 +101,20 @@ Page({
         }
     },
 
-    onUnload() {
-        this.close();
-    },
-
-    onHide() {
-        this.close();
-    },
-
+    /**
+     * 连接到聊天室信道服务
+     */
     connect() {
         this.amendMessage(createSystemMessage('正在加入群聊...'));
 
+        // 创建并打开信道
         var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl);
         tunnel.open();
 
-        tunnel.on('connect', () => {
-            this.popMessage();
-        });
+        // 连接成功后，去掉「正在加入群聊」的系统提示
+        tunnel.on('connect', () => this.popMessage());
 
+        // 聊天室有人加入或退出，反馈到 UI 上
         tunnel.on('people', people => {
             const { total, enter, leave } = people;
             if (enter) {
@@ -83,53 +124,38 @@ Page({
             }
         });
 
+        // 有人说话，创建一条消息
         tunnel.on('speak', speak => {
             const { word, who } = speak;
             this.pushMessage(createUserMessage(word, who, who.openId == this.me.openId));
         });
 
+        // 信道关闭后，显示退出群聊
         tunnel.on('close', () => {
             this.pushMessage(createSystemMessage('您已退出群聊'));
         });
 
+        // 重连提醒
         tunnel.on('reconnecting', () => {
             this.pushMessage(createSystemMessage("已断线，正在重连..."));
         });
-
         tunnel.on('reconnect', () => {
             this.amendMessage(createSystemMessage("重连成功"));
         });
-
-        tunnel.on('*', function(type, args) {
-            switch(type) {
-            case 'connect':
-                console.log('连接已建立');
-                break;
-            case 'close':
-                console.log('连接已断开');
-                break;
-            case 'reconnecting':
-                console.log('正在重连');
-                break;
-            case 'reconnect':
-                console.log('重连成功');
-                break;
-            case 'error':
-                console.error(args);
-                break;
-            default:
-                //console.log(type, args);
-                break;
-            }
-        });
     },
 
-    close() {
+    /**
+     * 退出聊天室
+     */
+    quit() {
         if (this.tunnel) {
             this.tunnel.close();
         }
     },
 
+    /**
+     * 通用更新当前消息集合的方法
+     */
     updateMessages(updater) {
         var messages = this.data.messages;
         updater(this.data.messages);
@@ -139,25 +165,44 @@ Page({
         });
     },
 
+    /**
+     * 追加一条消息
+     */
     pushMessage(message) {
         this.updateMessages(messages => messages.push(message));
     },
 
+    /**
+     * 替换上一条消息
+     */
     amendMessage(message) {
         this.updateMessages(messages => messages.splice(-1, 1, message));
     },
 
+    /**
+     * 删除上一条消息
+     */
     popMessage() {
         this.updateMessages(messages => messages.pop());
     },
 
+    /**
+     * 用户输入的内容改变之后
+     */
     changeInputContent(e) {
         this.setData({ inputContent: e.detail.value });
     },
 
+    /**
+     * 点击「发送」按钮，通过信道推送消息到服务器
+     **/
     sendMessage(e) {
+        // 信道当前不可用
         if (!this.tunnel || !this.tunnel.isActive()) {
             this.pushMessage(createSystemMessage("您还没有加入群聊，请稍后重试"));
+            if (this.tunnel.isClosed()) {
+                this.enter();
+            }
             return;
         }
         setTimeout(() => {

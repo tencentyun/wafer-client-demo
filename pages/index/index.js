@@ -29,6 +29,7 @@ Page({
         qcloud.setLoginUrl(this.data.loginUrl);
         qcloud.request({
             url: this.data.requestUrl,
+            login: true,
 
             success: function () {
                 console.log('request success', arguments);

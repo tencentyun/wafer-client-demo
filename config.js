@@ -1,4 +1,4 @@
-var host = 'www.qcloud.la';
+var host = '59431301.qcloud.la';
 
 var config = {
     service: {

@@ -25,11 +25,23 @@ Page({
 
     onReady() {
         wx.setNavigationBarTitle({ title: '三木聊天室' });
+
+        if (!this.pageReady) {
+            this.pageReady = true;
+            this.begin();
+        }
     },
 
     onShow() {
-        this.pushMessage(createSystemMessage('正在登陆...'));
+        if (this.pageReady) {
+            this.begin();
+        }
+    },
+
+    begin() {
+        this.pushMessage(createSystemMessage('正在登录...'));
         qcloud.setLoginUrl(config.service.loginUrl);
+
         if (!this.me) {
             qcloud.request({
                 url: `https://${config.service.host}/user`,
@@ -44,10 +56,12 @@ Page({
         }
     },
 
+    onUnload() {
+        this.close();
+    },
+
     onHide() {
-        if (this.tunnel) {
-            this.tunnel.close();
-        }
+        this.close();
     },
 
     connect() {
@@ -108,6 +122,12 @@ Page({
                 break;
             }
         });
+    },
+
+    close() {
+        if (this.tunnel) {
+            this.tunnel.close();
+        }
     },
 
     updateMessages(updater) {

@@ -12,10 +12,12 @@
     </view>
     <view class="line">
         <text>信道服务测试</text>
-        <input type="text" value="{{tunnelServiceUrl}}" disabled />
+        <input type="text" value="{{tunnelUrl}}" disabled />
         <button bindtap="openTunnel" type="primary">打开信道</button>
         <button bindtap="sendMessage">发送消息</button>
         <button bindtap="closeTunnel">关闭信道</button>
     </view>
-    <view class="chat"></view>
+    <view class="line">
+        <button bindtap="openChat" type="primary">♥ 三木聊天室 ♥</button>
+    </view>
 </view>

@@ -3,9 +3,9 @@ var config = require('../../config');
 
 Page({
     data: {
-        loginUrl: 'https://www.qcloud.la/login',
-        requestUrl: 'https://www.qcloud.la/user',
-        tunnelServiceUrl: 'https://www.qcloud.la/tunnel',
+        loginUrl: config.service.loginUrl,
+        requestUrl: config.service.requestUrl,
+        tunnelUrl: config.service.tunnelUrl,
     },
 
     doLogin: function () {
@@ -46,7 +46,8 @@ Page({
 
     openTunnel: function () {
         qcloud.setLoginUrl(this.data.loginUrl);
-        var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelServiceUrl);
+
+        var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelUrl);
         tunnel.open();
         tunnel.on('*', function (type, args) {
             switch(type) {
@@ -84,5 +85,9 @@ Page({
                 'word': Math.random().toString(32).slice(2),
             });
         }
+    },
+
+    openChat: function () {
+        wx.navigateTo({ url: '../chat/chat' });
     },
 });

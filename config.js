@@ -4,7 +4,8 @@ var config = {
     service: {
         host,
         loginUrl: `https://${host}/login`,
-        tunnelUrl: `https://${host}/tunnel`
+        requestUrl: `https://${host}/user`,
+        tunnelUrl: `https://${host}/tunnel`,
     }
 };
 

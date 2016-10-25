@@ -1,96 +1,148 @@
-.chat-container {
-    background: #EEE;
+.page-wrap{
+    display: flex;
+    flex-direction: column;
+    background: #ebebeb;
     position: absolute;
     top: 0;
-    bottom: 40px;
-    right: 0;
+    bottom: 0;
     left: 0;
-    text-align: center;
+    right: 0;
+    overflow: hidden;
 }
-
-.system-message {
-    background: #BBB;
-    color: white;
+.chat-container{
+    flex: 1;
+    text-align: center;
+    overflow-y:auto;
+}
+.system-message{
+    font-size: 24rpx;
+    line-height: 24rpx;
+    color: #fff;
+    background: #cecece;
     border-radius: 4px;
-    margin: 10px;
-    text-align: center;
-    font-size: 12px;
-    padding: 2px 6px;
-    width: auto;
     display: inline-block;
-}
+    padding: 8rpx 15rpx;
+    margin: 30rpx 0 10rpx;
 
-.user-message {
-    display: flex;
-    margin: 10px;
 }
-
-.user-message .avatar {
-    width: 40px;
-    height: 40px;
-    margin-right: 5px;
-    background: #DDD;
-}
-
-.user-message .text {
+.user-message{
+    margin: 38rpx 20rpx 0;
     text-align: left;
+    font-size: 0;
+    display: flex
 }
-
-.user-message .text .nickname {
-    color: #999;
-    font-size: 12px;
-    margin-left: 5px;
-}
-
-.user-message .text .content {
-    display: inline-block;
-    background: white;
-    padding: 6px 8px;
-    border-radius: 5px;
-    margin-top: 5px;
-    max-width: 16rem;
-}
-
-.user-message.me {
+.user-message.me{
     flex-direction: row-reverse;
 }
-
-.user-message.me .avatar {
-    margin-left: 5px;
-    margin-right: 0;
+.avatar{
+    width: 78rpx;
+    height: 78rpx;
+    border: #a5a5a7 1rpx solid;
+    display: inline-block;
+    vertical-align: top;
 }
-
-.user-message.me .nickname {
-    display: none;
+.text{
+    display: inline-block;
+    vertical-align: top;
 }
-
-.input-panel {
-    background: #f3f3f3;
-    border-top: 1px solid #DDD;
-    height: 40px;
+.user-message.other .text{
+    margin-left: 19rpx;
+}
+.user-message.me .text{
+    margin-right: 19rpx;
+}
+.text .nickname{
+    color: #737373;
+    font-size: 24rpx;
+    margin-bottom: 6rpx;
+}
+.text .content{
+    border: #ccc 1rpx solid;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 30rpx;
+    line-height: 30rpx;
+    padding: 20rpx;
+    position: relative;
+}
+.user-message.me .text .content{
+    background: #a0e75b;
+    border: #70b44d 1rpx solid;
+}
+.text .content::after,.text .content::before{
+    font-size: 0;
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
+    width: 0;
+    height: 0;
+    content: '';
+    border: 13rpx dashed transparent;
+}
+
+.user-message.other .text .content::after,.user-message.other .text .content::before{
+    right: 100%;
+    border-right-style: solid;
+}
+.user-message.other .text .content::before{
+    top: 18rpx;
+    border-right-color: #ccc;
+}
+.user-message.other .text .content::after{
+    border: 12rpx solid transparent;
+    top: 19rpx;
+    border-right-color: #fff;
+}
+
+.user-message.me .text .content::after,.user-message.me .text .content::before{
+    left: 100%;
+    border-left-style: solid;
+}
+
+.user-message.me .text .content::before{
+    top: 18rpx;
+    border-left-color: #70b44d;
+}
+.user-message.me .text .content::after{
+    border: 12rpx solid transparent;
+    top: 19rpx;
+    border-left-color: #a0e75b;
+}
+.text .content.img{
+    border: #ccc 1rpx solid;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 30rpx;
+    line-height: normal;
+    padding: 10rpx;
+    position: relative;
+    text-align: center;
+}
+.input-panel{
+    height: 100rpx;
+    box-sizing: border-box;
+    padding: 13rpx 20rpx 0;
+    background: #f5f5f7;
+    border-top:#d7d7d9 1rpx solid;
+    box-sizing: border-box;
     display: flex;
 }
-
-.input-panel input {
-    flex: 8;
-    background: #f9f9f9;
-    height: 30px;
-    line-height: 30px;
-    border: 1px solid #DDD;
-    margin: 4px; 
-    border-radius: 2px;
-    padding: 0 4px;
+.pic-icon{
+    width: 60rpx;
+    height: 44rpx;
+    margin: 15rpx 20rpx 0 0;
+    background:url(http://imgcache.qq.com/open_proj/proj_qcloud_v2/wechat_mc/pic/send.svg) ;
 }
-
-.input-panel button {
-    flex: 2;
-    margin: 4px;
-    margin-left: 0;
-    height: 32px;
-    line-height: 32px;
+.send-input{
+    flex: 1;
+    height: 72rpx;
+    background: #fff;
+    border:#ddd 1rpx solid;
+    border-radius: 3px;
+    margin-right: 20rpx;
+    box-sizing: border-box;
+}
+.send-btn{
+    width: 120rpx;
+    height: 72rpx;
+    line-height: 72rpx;
+    background-color: #a0e75a;
 }

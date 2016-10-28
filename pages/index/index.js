@@ -28,11 +28,11 @@ Page({
     doLogin() {
         // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们再 app.js 的入口里面已经调用过了，后面就不用再调用了
         qcloud.login({
-            success: function () {
+            success() {
                 console.log('登录成功', arguments);
             },
 
-            fail: function () {
+            fail() {
                 console.log('登录失败', arguments);
             }
         });
@@ -41,7 +41,7 @@ Page({
     /**
      * 点击「清除会话」按钮
      */
-    clearSession: function () {
+    clearSession() {
         // 因为会话是存放在微信的 storage 里面的，所以清除 storage 会清除会话
         wx.clearStorageSync();
     },
@@ -49,7 +49,7 @@ Page({
     /**
      * 点击「请求」按钮，测试带会话请求的功能
      */
-    doRequest: function () {
+    doRequest() {
         // qcloud.request() 方法和 wx.request() 方法使用是一致的，不过如果用户已经登录的情况下，会把用户的会话信息带给服务器，服务器可以跟踪用户
         qcloud.request({
             // 要请求的地址
@@ -58,15 +58,15 @@ Page({
             // 请求之前是否登陆，如果该项指定为 true，会在请求之前进行登录
             login: true,
 
-            success: function () {
+            success() {
                 console.log('request success', arguments);
             },
 
-            fail: function () {
+            fail() {
                 console.log('request fail', arguments);
             },
 
-            complete: function () {
+            complete() {
                 console.log('request complete');
             }
         });
@@ -75,7 +75,7 @@ Page({
     /**
      * 点击「打开信道」，测试 WebSocket 信道服务
      */
-    openTunnel: function () {
+    openTunnel() {
 
         // 创建信道，需要给定后台服务地址
         var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelUrl);
@@ -97,7 +97,7 @@ Page({
     /**
      * 点击「发送消息」按钮，测试使用信道发送消息
      */
-    sendMessage: function () {
+    sendMessage() {
         // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
         if (this.tunnel && this.tunnel.isActive()) {
             // 使用信道给服务器推送「speak」消息
@@ -119,7 +119,7 @@ Page({
     /**
      * 点击「关闭信道」按钮，关闭已经打开的信道
      */
-    closeTunnel: function () {
+    closeTunnel() {
         if (this.tunnel) {
             this.tunnel.close();
         }
@@ -128,7 +128,7 @@ Page({
     /**
      * 点击「聊天室」按钮，跳转到聊天室综合 Demo 的页面
      */
-    openChat: function () {
+    openChat() {
         // 微信只允许一个信道再运行，聊天室使用信道前，我们先把当前的关闭
         this.closeTunnel();
         wx.navigateTo({ url: '../chat/chat' });

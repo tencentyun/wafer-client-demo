@@ -26,7 +26,7 @@ Page({
      * 点击「登录」按钮，测试登录功能
      */
     doLogin() {
-        // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们再 app.js 的入口里面已经调用过了，后面就不用再调用了
+        // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们在 app.js 的入口里面已经调用过了，后面就不用再调用了
         qcloud.login({
             success() {
                 console.log('登录成功', arguments);
@@ -42,8 +42,8 @@ Page({
      * 点击「清除会话」按钮
      */
     clearSession() {
-        // 因为会话是存放在微信的 storage 里面的，所以清除 storage 会清除会话
-        wx.clearStorageSync();
+        // 清除保存在 storage 的会话信息
+        qcloud.clearSession();
     },
 
     /**

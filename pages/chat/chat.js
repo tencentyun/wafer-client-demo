@@ -9,14 +9,14 @@ var qcloud = require('../../bower_components/qcloud-weapp-client-sdk/index');
 // 引入配置
 var config = require('../../config');
 
-/** 
+/**
  * 生成一条聊天室的消息的唯一 ID
  */
 function msgUuid() {
     if (!msgUuid.next) {
         msgUuid.next = 0;
     }
-    return 'msg_' + msgUuid.next;
+    return 'msg-' + (++msgUuid.next);
 }
 
 /**
@@ -26,11 +26,11 @@ function createSystemMessage(content) {
     return { id: msgUuid(), type: 'system', content };
 }
 
-/** 
+/**
  * 生成聊天室的聊天消息
  */
-function createUserMessage(content, user, me) {
-    return { id: msgUuid(), type: 'speak', content, user, me };
+function createUserMessage(content, user, isMe) {
+    return { id: msgUuid(), type: 'speak', content, user, isMe };
 }
 
 // 声明聊天室页面
@@ -49,8 +49,6 @@ Page({
      * 页面渲染完成后，启动聊天室
      * */
     onReady() {
-        wx.setNavigationBarTitle({ title: '三木聊天室' });
-
         if (!this.pageReady) {
             this.pageReady = true;
             this.enter();
@@ -61,6 +59,8 @@ Page({
      * 后续后台切换回前台的时候，也要重新启动聊天室
      */
     onShow() {
+        wx.setNavigationBarTitle({ title: '三木聊天室' });
+
         if (this.pageReady) {
             this.enter();
         }
@@ -86,7 +86,7 @@ Page({
     enter() {
         this.pushMessage(createSystemMessage('正在登录...'));
 
-        // 如果登陆过，会记录当前用户在 this.me 上
+        // 如果登录过，会记录当前用户在 this.me 上
         if (!this.me) {
             qcloud.request({
                 url: `https://${config.service.host}/user`,
@@ -117,6 +117,7 @@ Page({
         // 聊天室有人加入或退出，反馈到 UI 上
         tunnel.on('people', people => {
             const { total, enter, leave } = people;
+
             if (enter) {
                 this.pushMessage(createSystemMessage(`${enter.nickName}已加入群聊，当前共 ${total} 人`));
             } else {
@@ -137,10 +138,11 @@ Page({
 
         // 重连提醒
         tunnel.on('reconnecting', () => {
-            this.pushMessage(createSystemMessage("已断线，正在重连..."));
+            this.pushMessage(createSystemMessage('已断线，正在重连...'));
         });
+
         tunnel.on('reconnect', () => {
-            this.amendMessage(createSystemMessage("重连成功"));
+            this.amendMessage(createSystemMessage('重连成功'));
         });
     },
 
@@ -158,11 +160,10 @@ Page({
      */
     updateMessages(updater) {
         var messages = this.data.messages;
-        updater(this.data.messages);
-        this.setData({
-            messages,
-            lastMessageId: messages.length && messages[messages.length - 1].id
-        });
+        updater(messages);
+
+        var lastMessageId = messages.length && messages[messages.length - 1].id;
+        this.setData({ messages, lastMessageId });
     },
 
     /**
@@ -199,12 +200,13 @@ Page({
     sendMessage(e) {
         // 信道当前不可用
         if (!this.tunnel || !this.tunnel.isActive()) {
-            this.pushMessage(createSystemMessage("您还没有加入群聊，请稍后重试"));
+            this.pushMessage(createSystemMessage('您还没有加入群聊，请稍后重试'));
             if (this.tunnel.isClosed()) {
                 this.enter();
             }
             return;
         }
+
         setTimeout(() => {
             if (this.data.inputContent && this.tunnel) {
                 this.tunnel.emit('speak', { word: this.data.inputContent });

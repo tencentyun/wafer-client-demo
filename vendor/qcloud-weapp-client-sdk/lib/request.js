@@ -81,25 +81,28 @@ function request(options) {
             success: function (response) {
                 var data = response.data;
 
-                // 如果响应的数据里面包含 SDK MagicID，表示被服务端 SDK 处理过，此时一定包含登录态失败的信息
+                // 如果响应的数据里面包含 SDK Magic ID，表示被服务端 SDK 处理过，此时一定包含登录态失败的信息
                 if (data && data[constants.WX_SESSION_MAGIC_ID]) {
                     // 清除登录态
                     Session.clear();
 
                     var error, message;
-                    if (data.error == constants.ERR_INVALID_SESSION) {
+                    if (data.error === constants.ERR_INVALID_SESSION) {
                         // 如果是登录态无效，并且还没重试过，会尝试登录后刷新凭据重新请求
                         if (!hasRetried) {
                             hasRetried = true;
                             doRequestWithLogin();
                             return;
                         }
+
                         message = '登录态已过期';
                         error = new RequestError(data.error, message);
+
                     } else {
                         message = '鉴权服务器检查登录态发生错误(' + (data.error || 'OTHER') + ')：' + (data.message || '未知错误');
                         error = new RequestError(constants.ERR_CHECK_LOGIN_FAILED, message);
                     }
+
                     callFail(error);
                     return;
                 }

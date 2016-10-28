@@ -2,7 +2,7 @@
  * @fileOverview 微信小程序的入口文件
  */
 
-var qcloud = require('./bower_components/qcloud-weapp-client-sdk/index');
+var qcloud = require('./vendor/qcloud-weapp-client-sdk/index');
 var config = require('./config');
 
 App({

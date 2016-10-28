@@ -15,7 +15,7 @@
     "auth",
     "websocket"
   ],
-  "homepage": "https://github.com/CFETeam/weapp-client-sdk",
+  "homepage": "https://github.com/tencentyun/weapp-client-sdk",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -27,14 +27,14 @@
     ".npmignore",
     ".gitignore"
   ],
-  "version": "0.6.0",
-  "_release": "0.6.0",
+  "version": "0.7.0",
+  "_release": "0.7.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.6.0",
-    "commit": "d4246c2a39b7b4a2696e8a6cdf88b125e2b17f43"
+    "tag": "v0.7.0",
+    "commit": "e3c73c0130210bb9add3d82440d7d965324d55f3"
   },
-  "_source": "https://github.com/CFETeam/weapp-client-sdk.git",
+  "_source": "https://github.com/tencentyun/weapp-client-sdk.git",
   "_target": "*",
   "_originalSource": "qcloud-weapp-client-sdk"
 }

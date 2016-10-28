@@ -11,7 +11,7 @@ var Session = {
     },
 
     clear: function () {
-        wx.setStorageSync(SESSION_KEY, null);
+        wx.removeStorageSync(SESSION_KEY);
     },
 };
 

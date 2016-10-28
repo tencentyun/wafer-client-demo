@@ -27,6 +27,7 @@ var PACKET_TYPE_CLOSE = 'close';
 
 // 断线重连最多尝试 5 次
 var DEFAULT_MAX_RECONNECT_TRY_TIMES = 5;
+
 // 每次重连前，等待时间的增量值
 var DEFAULT_RECONNECT_TIME_INCREASE = 1000;
 
@@ -344,7 +345,7 @@ function Tunnel(serviceUrl) {
      *       1. 表示收到服务器的 Pong 相应之后，过多久再发下一次 Ping
      *       2. 如果 Ping 发送之后，超过这个时间还没收到 Pong，断开与服务器的连接
      *   该值将在与信道服务器建立连接后被更新
-     */ 
+     */
     let pingPongTimeout = 15000;
     let pingTimer = 0;
     let pongTimer = 0;
@@ -387,8 +388,8 @@ function Tunnel(serviceUrl) {
         }
     }
 
-    /** 
-     * Pong 超时没有响应，信道可能已经不可用，需要断开重连 
+    /**
+     * Pong 超时没有响应，信道可能已经不可用，需要断开重连
      */
     function handlePongTimeout() {
         startReconnect('服务器已失去响应');
@@ -458,7 +459,6 @@ function Tunnel(serviceUrl) {
         }
     }
 
-    
     function close() {
         isClosing = true;
         closeSocket();

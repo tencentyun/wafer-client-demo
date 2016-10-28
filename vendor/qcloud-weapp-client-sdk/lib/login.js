@@ -76,15 +76,7 @@ var login = function login(options) {
         return;
     }
 
-    // 已存在会话，无需重复登录
-    var session = Session.get();
-    if (session) {
-        options.success(session.userInfo);
-        return;
-    }
-
-    // 先获得微信登录结果
-    getWxLoginResult(function (wxLoginError, wxLoginResult) {
+    var doLogin = () => getWxLoginResult(function (wxLoginError, wxLoginResult) {
         if (wxLoginError) {
             options.fail(wxLoginError);
             return;
@@ -94,6 +86,7 @@ var login = function login(options) {
         var code = wxLoginResult.code;
         var encryptData = wxLoginResult.encryptData;
         var userInfo = wxLoginResult.userInfo;
+
         var header = {};
         header[constants.WX_HEADER_CODE] = code;
         header[constants.WX_HEADER_ENCRYPT_DATA] = encryptData;
@@ -106,18 +99,19 @@ var login = function login(options) {
 
             success: function (result) {
                 var data = result.data;
+
                 // 成功地响应会话信息
                 if (data && data[constants.WX_SESSION_MAGIC_ID]) {
                     if (data.session) {
                         data.session.userInfo = userInfo;
                         Session.set(data.session);
                         options.success(userInfo);
-                        return;
                     } else {
                         var errorMessage = '登录失败(' + data.error + ')：' + (data.message || '未知错误');
                         var noSessionError = new LoginError(constants.ERR_LOGIN_SESSION_NOT_RECEIVED, errorMessage);
                         options.fail(noSessionError);
                     }
+
                 // 没有正确响应会话信息
                 } else {
                     var errorMessage = '登录请求没有包含会话响应，请确保服务器处理 `' + options.loginUrl + '` 的时候正确使用了 SDK 输出登录结果';
@@ -133,14 +127,30 @@ var login = function login(options) {
             },
         });
     });
+
+    var session = Session.get();
+    if (session) {
+        wx.checkSession({
+            success: function () {
+                options.success(session.userInfo);
+            },
+
+            fail: function () {
+                Session.clear();
+                doLogin();
+            },
+        });
+    } else {
+        doLogin();
+    }
 };
 
-var setLoginUrl = function(loginUrl) {
+var setLoginUrl = function (loginUrl) {
     defaultOptions.loginUrl = loginUrl;
 };
 
 module.exports = {
     LoginError: LoginError,
     login: login,
-    setLoginUrl: setLoginUrl
+    setLoginUrl: setLoginUrl,
 };

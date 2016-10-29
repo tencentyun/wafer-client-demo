@@ -2,7 +2,7 @@
     <view class="line">
         <text>综合示例</text>
         <view bindtap="openChat" class="demo">
-            练小习聊天室
+            三木聊天室
             <view class="link">Demo体验 ></view>
         </view>
     </view>

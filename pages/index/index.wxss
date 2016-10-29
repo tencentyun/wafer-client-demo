@@ -33,6 +33,12 @@
 .line-control .item:active{
     background: #d9d9d9;
 }
+.line-control .item.flag{
+    color: #333;
+}
+.line-control .item.flag:active{
+    background: #fff;
+}
 .line-control .item-inner{
     border-bottom: #d9d9d9 1px solid;
 }

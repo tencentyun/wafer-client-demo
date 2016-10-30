@@ -107,9 +107,8 @@ Page({
     connect() {
         this.amendMessage(createSystemMessage('正在加入群聊...'));
 
-        // 创建并打开信道
+        // 创建信道
         var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl);
-        tunnel.open();
 
         // 连接成功后，去掉「正在加入群聊」的系统提示
         tunnel.on('connect', () => this.popMessage());
@@ -144,6 +143,9 @@ Page({
         tunnel.on('reconnect', () => {
             this.amendMessage(createSystemMessage('重连成功'));
         });
+
+        // 打开信道
+        tunnel.open();
     },
 
     /**

@@ -76,12 +76,8 @@ Page({
      * 点击「打开信道」，测试 WebSocket 信道服务
      */
     openTunnel() {
-
         // 创建信道，需要给定后台服务地址
         var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelUrl);
-
-        // 打开信道
-        tunnel.open();
 
         // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
         tunnel.on('connect', () => console.log('WebSocket 信道已连接'));
@@ -92,6 +88,9 @@ Page({
 
         // 监听自定义消息（服务器进行推送）
         tunnel.on('speak', speak => console.log('收到说话消息：', speak));
+
+        // 打开信道
+        tunnel.open();
     },
 
     /**

@@ -93,6 +93,11 @@
         .line text{
         font-size: 36rpx;
     }
+    .line-control .item-inner{
+        border-bottom: #d9d9d9 1px solid;
+        height: 110rpx;
+        line-height: 110rpx;
+    }
     .line-control .item{
         height: 110rpx;
         line-height: 110rpx;
@@ -105,9 +110,9 @@
     }
 
     .line .demo{
-    height: 110rpx;
-    line-height: 110rpx;
-    font-size: 38rpx;
-    padding-left: 40rpx;
-}
+        height: 110rpx;
+        line-height: 110rpx;
+        font-size: 38rpx;
+        padding-left: 40rpx;
+    }
 }

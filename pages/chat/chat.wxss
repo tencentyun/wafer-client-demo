@@ -152,6 +152,9 @@
     background-color: #a0e75a;
     font-size: 28rpx;
 }
+.me .nickname{
+    display: none;
+}
 
 @media (max-width : 360px){
     .avatar{

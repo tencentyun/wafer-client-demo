@@ -24,15 +24,17 @@
     "tests",
     "typings.json",
     "jsconfig.json",
+    "package.json",
     ".npmignore",
+    ".travis.yml",
     ".gitignore"
   ],
-  "version": "0.7.0",
-  "_release": "0.7.0",
+  "version": "0.7.3",
+  "_release": "0.7.3",
   "_resolution": {
     "type": "version",
-    "tag": "v0.7.0",
-    "commit": "e3c73c0130210bb9add3d82440d7d965324d55f3"
+    "tag": "v0.7.3",
+    "commit": "481d59dbd1719e23238a85b316259ab42ca526a6"
   },
   "_source": "https://github.com/tencentyun/weapp-client-sdk.git",
   "_target": "*",

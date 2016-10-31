@@ -24,7 +24,9 @@
     "tests",
     "typings.json",
     "jsconfig.json",
+    "package.json",
     ".npmignore",
+    ".travis.yml",
     ".gitignore"
   ]
 }

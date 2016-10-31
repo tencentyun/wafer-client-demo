@@ -22,11 +22,15 @@ var showSuccess = text => wx.showToast({
 });
 
 // 显示失败提示
-var showModel = (title, content) => wx.showModal({
-    title,
-    content: JSON.stringify(content),
-    showCancel: false
-});
+var showModel = (title, content) => {
+    wx.hideToast();
+
+    wx.showModal({
+        title,
+        content: JSON.stringify(content),
+        showCancel: false
+    });
+};
 
 /**
  * 使用 Page 初始化页面，具体可参考微信公众平台上的文档
@@ -53,16 +57,17 @@ Page({
      */
     doLogin() {
         showBusy('正在登录');
+
         // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们在 app.js 的入口里面已经调用过了，后面就不用再调用了
         qcloud.login({
-            success() {
+            success(result) {
                 showSuccess('登录成功');
-                console.log('登录成功', arguments);
+                console.log('登录成功', result);
             },
 
-            fail() {
-                showModel('登录失败', arguments);
-                console.log('登录失败', arguments);
+            fail(error) {
+                showModel('登录失败', error);
+                console.log('登录失败', error);
             }
         });
     },
@@ -80,7 +85,8 @@ Page({
      * 点击「请求」按钮，测试带会话请求的功能
      */
     doRequest() {
-        showBusy("正在请求");
+        showBusy('正在请求');
+
         // qcloud.request() 方法和 wx.request() 方法使用是一致的，不过如果用户已经登录的情况下，会把用户的会话信息带给服务器，服务器可以跟踪用户
         qcloud.request({
             // 要请求的地址
@@ -89,14 +95,14 @@ Page({
             // 请求之前是否登陆，如果该项指定为 true，会在请求之前进行登录
             login: true,
 
-            success() {
+            success(result) {
                 showSuccess('请求成功完成');
-                console.log('request success', arguments);
+                console.log('request success', result);
             },
 
-            fail() {
-                showModel('请求失败', JSON.stringify(arguments));
-                console.log('request fail', arguments);
+            fail(error) {
+                showModel('请求失败', error);
+                console.log('request fail', error);
             },
 
             complete() {
@@ -107,10 +113,11 @@ Page({
 
     switchTunnel(e) {
         const turnedOn = e.detail.value;
+
         if (turnedOn && this.data.tunnelStatus == 'closed') {
             this.openTunnel();
-        }
-        else if (!turnedOn && this.data.tunnelStatus == 'connected') {
+
+        } else if (!turnedOn && this.data.tunnelStatus == 'connected') {
             this.closeTunnel();
         }
     },
@@ -127,18 +134,22 @@ Page({
             console.log('WebSocket 信道已连接');
             this.setData({ tunnelStatus: 'connected' });
         });
+
         tunnel.on('close', () => {
             console.log('WebSocket 信道已断开');
             this.setData({ tunnelStatus: 'closed' });
         });
+
         tunnel.on('reconnecting', () => {
             console.log('WebSocket 信道正在重连...')
             showBusy('正在重连');
         });
+
         tunnel.on('reconnect', () => {
             console.log('WebSocket 信道重连成功')
             showSuccess('重连成功');
         });
+
         tunnel.on('error', error => {
             showModel('信道发生错误', error);
             console.error('信道发生错误：', error);
@@ -152,6 +163,7 @@ Page({
 
         // 打开信道
         tunnel.open();
+
         this.setData({ tunnelStatus: 'connecting' });
     },
 
@@ -184,6 +196,7 @@ Page({
         if (this.tunnel) {
             this.tunnel.close();
         }
+
         this.setData({ tunnelStatus: 'closed' });
     },
 
@@ -195,6 +208,4 @@ Page({
         this.closeTunnel();
         wx.navigateTo({ url: '../chat/chat' });
     },
-
-    noop() {}
 });

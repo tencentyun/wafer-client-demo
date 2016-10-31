@@ -69,6 +69,9 @@
 .line-control .item.disabled{
     color: #999
 }
+.line-control .item.disabled:active{
+    background: none;
+}
 .line .demo{
     height: 90rpx;
     line-height: 90rpx;
@@ -88,4 +91,36 @@
 }
 .hide{
     display: none
+}
+
+@media (max-width : 360px){
+        .line text{
+        font-size: 36rpx;
+    }
+    .line-control .item{
+        height: 110rpx;
+        line-height: 110rpx;
+        box-sizing: border-box;
+        text-align: left;
+        color: #007AFF;
+        font-size: 38rpx;
+        padding-left: 40rpx;
+        position: relative
+    }
+    .line-control .switch{
+        height: 80rpx;
+        overflow: hidden;
+        vertical-align: middle
+    }
+    .line-control .switch-status{
+    height: 110rpx;
+    line-height: 110rpx;
+    font-size: 130rpx;
+}
+    .line .demo{
+    height: 110rpx;
+    line-height: 110rpx;
+    font-size: 38rpx;
+    padding-left: 40rpx;
+}
 }

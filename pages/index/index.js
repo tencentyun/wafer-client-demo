@@ -8,6 +8,26 @@ var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 // 引入配置
 var config = require('../../config');
 
+// 显示繁忙提示
+var showBusy = text => wx.showToast({
+    title: text,
+    icon: 'loading',
+    duration: 10000
+});
+
+// 显示成功提示
+var showSuccess = text => wx.showToast({
+    title: text,
+    icon: 'success'
+});
+
+// 显示失败提示
+var showFail = (title, content) => wx.showModal({
+    title,
+    content,
+    showCancel: false
+});
+
 /**
  * 使用 Page 初始化页面，具体可参考微信公众平台上的文档
  */
@@ -26,13 +46,16 @@ Page({
      * 点击「登录」按钮，测试登录功能
      */
     doLogin() {
+        showBusy('正在登录');
         // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们在 app.js 的入口里面已经调用过了，后面就不用再调用了
         qcloud.login({
             success() {
+                showSuccess('登录成功');
                 console.log('登录成功', arguments);
             },
 
             fail() {
+                showFail('登录失败', JSON.stringify(arguments));
                 console.log('登录失败', arguments);
             }
         });
@@ -44,12 +67,14 @@ Page({
     clearSession() {
         // 清除保存在 storage 的会话信息
         qcloud.clearSession();
+        showSuccess('会话已清除');
     },
 
     /**
      * 点击「请求」按钮，测试带会话请求的功能
      */
     doRequest() {
+        showBusy("正在请求...");
         // qcloud.request() 方法和 wx.request() 方法使用是一致的，不过如果用户已经登录的情况下，会把用户的会话信息带给服务器，服务器可以跟踪用户
         qcloud.request({
             // 要请求的地址
@@ -59,10 +84,12 @@ Page({
             login: true,
 
             success() {
+                showSuccess('请求成功完成');
                 console.log('request success', arguments);
             },
 
             fail() {
+                showFail('请求失败', JSON.stringify(arguments));
                 console.log('request fail', arguments);
             },
 

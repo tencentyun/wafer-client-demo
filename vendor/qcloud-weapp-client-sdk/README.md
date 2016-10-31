@@ -1,5 +1,9 @@
 # 微信小程序客户端腾讯云增强 SDK
 
+[![Build Status](https://travis-ci.org/tencentyun/weapp-client-sdk.svg?branch=master)](https://travis-ci.org/tencentyun/weapp-client-sdk)
+[![Coverage Status](https://coveralls.io/repos/github/tencentyun/weapp-client-sdk/badge.svg?branch=master)](https://coveralls.io/github/tencentyun/weapp-client-sdk?branch=master)
+[![License](http://img.shields.io/npm/l/qcloud-weapp-client-sdk.svg)](LICENSE)
+
 ## 会话管理服务
 
 微信的网络请求接口 `wx.request()` 没有携带 Cookies，这让传统基于 Cookies 实现的会话管理不再适用。为了让处理微信小程序的服务能够识别会话，腾讯云推出的微信小程序客户端增强 SDK 支持会话管理服务。配合云端 SDK 使用，可以轻松集成安全的会话管理能力。

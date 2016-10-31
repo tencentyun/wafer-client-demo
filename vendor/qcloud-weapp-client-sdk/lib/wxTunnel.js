@@ -1,4 +1,4 @@
-const noop = () => 0;
+const noop = () => void(0);
 
 let onOpen, onClose, onMessage, onError;
 

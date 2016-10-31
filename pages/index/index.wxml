@@ -3,7 +3,7 @@
         <text>综合示例</text>
         <view bindtap="openChat" class="demo">
             三木聊天室
-            <view class="link">Demo体验</view>
+            <view class="link">Demo体验 ></view>
         </view>
     </view>
     <view class="line">
@@ -25,7 +25,7 @@
         <text>WebSocket 信道服务测试</text>
         <input type="text" value="{{tunnelUrl}}" disabled class="hide" />
         <view class="line-control">
-            <view bindtap="openTunnel" class="item"><view class="item-inner">打开信道 <view class="switch-status"><text>状态...</text><switch checked bindchange="switch2Change" class="switch"/></view> </view></view>
+            <view bindtap="openTunnel"  class="item flag"><view class="item-inner">打开信道 <view class="switch-status"><text>状态...</text><switch checked bindchange="switch2Change" class="switch"/></view> </view></view>
             <view bindtap="sendMessage"  class="item disabled"><view class="item-inner">发送消息</view></view>
             <view bindtap="testReconnect"  class="item disabled"><view class="item-inner">测试重连</view></view>
         </view>

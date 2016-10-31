@@ -10,12 +10,13 @@
     padding-top: 30rpx;
 }
 .line text{
-    color: #999;
+    color: #6D6D72;
     font-size: 28rpx;
     margin-left: 40rpx;
 }
 .line-control{
     border-bottom: #d9d9d9 1px solid;
+    border-top: #d9d9d9 1px solid;
     background-color: #fff;
     margin-top: 10rpx;
 }
@@ -24,13 +25,19 @@
     line-height: 90rpx;
     box-sizing: border-box;
     text-align: left;
-    color: #1c7bee;
+    color: #007AFF;
     font-size: 32rpx;
     padding-left: 40rpx;
     position: relative
 }
 .line-control .item:active{
     background: #d9d9d9;
+}
+.line-control .item.flag{
+    color: #333;
+}
+.line-control .item.flag:active{
+    background: #fff;
 }
 .line-control .item-inner{
     border-bottom: #d9d9d9 1px solid;
@@ -39,13 +46,16 @@
      border:none;
 }
 .line-control .switch{
-    margin-top: 15rpx;
+    height: 64rpx;
+    overflow: hidden;
+    vertical-align: middle
 }
 .line-control text{
     display: inline-block;
-    vertical-align: top;
-    height: 100%;
+    vertical-align: middle;
     margin-right: 10rpx;
+    color: #8E8E93;
+    margin-left: 0;
 }
 .line-control .switch-status{
     color: #999;
@@ -54,6 +64,7 @@
     top: 0;
     height: 90rpx;
     line-height: 90rpx;
+    font-size: 100rpx;
 }
 .line-control .item.disabled{
     color: #999
@@ -73,7 +84,7 @@
     position: absolute;
     right: 40rpx;
     top: 0rpx;
-    color: #999;
+    color: #8E8E93;
 }
 .hide{
     display: none

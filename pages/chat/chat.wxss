@@ -15,8 +15,8 @@
     overflow-y:auto;
 }
 .system-message{
-    font-size: 24rpx;
-    line-height: 24rpx;
+    font-size: 14px;
+    line-height: 14px;
     color: #fff;
     background: #cecece;
     border-radius: 4px;
@@ -35,8 +35,8 @@
     flex-direction: row-reverse;
 }
 .avatar{
-    width: 78rpx;
-    height: 78rpx;
+    width: 84rpx;
+    height: 84rpx;
     border: #a5a5a7 1rpx solid;
     display: inline-block;
     vertical-align: top;
@@ -53,15 +53,15 @@
 }
 .text .nickname{
     color: #737373;
-    font-size: 24rpx;
+    font-size: 14px;
     margin-bottom: 6rpx;
 }
 .text .content{
     border: #ccc 1rpx solid;
     border-radius: 4px;
     background: #fff;
-    font-size: 30rpx;
-    line-height: 30rpx;
+    font-size: 36rpx;
+    line-height: 36rpx;
     padding: 20rpx;
     position: relative;
 }
@@ -115,7 +115,12 @@
     padding: 10rpx;
     position: relative;
     text-align: center;
+    max-width: 560rpx;
 }
+.text .content.img image{
+    max-width: 100%;
+}
+
 .input-panel{
     height: 100rpx;
     box-sizing: border-box;
@@ -141,8 +146,9 @@
     box-sizing: border-box;
 }
 .send-btn{
-    width: 120rpx;
+    width: 160rpx;
     height: 72rpx;
     line-height: 72rpx;
     background-color: #a0e75a;
+    font-size: 28rpx;
 }

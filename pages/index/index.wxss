@@ -21,8 +21,6 @@
     margin-top: 10rpx;
 }
 .line-control .item{
-    height: 90rpx;
-    line-height: 90rpx;
     box-sizing: border-box;
     text-align: left;
     color: #007AFF;
@@ -41,14 +39,15 @@
 }
 .line-control .item-inner{
     border-bottom: #d9d9d9 1px solid;
+    height: 90rpx;
+    line-height: 90rpx;
 }
 .line-control .item:last-child .item-inner{
      border:none;
 }
 .line-control .switch{
-    height: 64rpx;
-    overflow: hidden;
-    vertical-align: middle
+    vertical-align: middle;
+    line-height: normal;
 }
 .line-control text{
     display: inline-block;
@@ -62,9 +61,6 @@
     position: absolute;
     right: 40rpx;
     top: 0;
-    height: 90rpx;
-    line-height: 90rpx;
-    font-size: 100rpx;
 }
 .line-control .item.disabled{
     color: #999
@@ -107,16 +103,7 @@
         padding-left: 40rpx;
         position: relative
     }
-    .line-control .switch{
-        height: 80rpx;
-        overflow: hidden;
-        vertical-align: middle
-    }
-    .line-control .switch-status{
-    height: 110rpx;
-    line-height: 110rpx;
-    font-size: 130rpx;
-}
+
     .line .demo{
     height: 110rpx;
     line-height: 110rpx;

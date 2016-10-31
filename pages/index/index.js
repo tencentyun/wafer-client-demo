@@ -22,9 +22,9 @@ var showSuccess = text => wx.showToast({
 });
 
 // 显示失败提示
-var showFail = (title, content) => wx.showModal({
+var showModel = (title, content) => wx.showModal({
     title,
-    content,
+    content: JSON.stringify(content),
     showCancel: false
 });
 
@@ -40,6 +40,12 @@ Page({
         loginUrl: config.service.loginUrl,
         requestUrl: config.service.requestUrl,
         tunnelUrl: config.service.tunnelUrl,
+        tunnelStatus: 'closed',
+        tunnelStatusText: {
+            closed: '已关闭',
+            connecting: '正在连接...',
+            connected: '已连接'
+        }
     },
 
     /**
@@ -55,7 +61,7 @@ Page({
             },
 
             fail() {
-                showFail('登录失败', JSON.stringify(arguments));
+                showModel('登录失败', arguments);
                 console.log('登录失败', arguments);
             }
         });
@@ -74,7 +80,7 @@ Page({
      * 点击「请求」按钮，测试带会话请求的功能
      */
     doRequest() {
-        showBusy("正在请求...");
+        showBusy("正在请求");
         // qcloud.request() 方法和 wx.request() 方法使用是一致的，不过如果用户已经登录的情况下，会把用户的会话信息带给服务器，服务器可以跟踪用户
         qcloud.request({
             // 要请求的地址
@@ -89,7 +95,7 @@ Page({
             },
 
             fail() {
-                showFail('请求失败', JSON.stringify(arguments));
+                showModel('请求失败', JSON.stringify(arguments));
                 console.log('request fail', arguments);
             },
 
@@ -97,6 +103,16 @@ Page({
                 console.log('request complete');
             }
         });
+    },
+
+    switchTunnel(e) {
+        const turnedOn = e.detail.value;
+        if (turnedOn && this.data.tunnelStatus == 'closed') {
+            this.openTunnel();
+        }
+        else if (!turnedOn && this.data.tunnelStatus == 'connected') {
+            this.closeTunnel();
+        }
     },
 
     /**
@@ -107,17 +123,36 @@ Page({
         var tunnel = this.tunnel = new qcloud.Tunnel(this.data.tunnelUrl);
 
         // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
-        tunnel.on('connect', () => console.log('WebSocket 信道已连接'));
-        tunnel.on('close', () => console.log('WebSocket 信道已断开'));
-        tunnel.on('reconnecting', () => console.log('WebSocket 信道正在重连...'));
-        tunnel.on('reconnect', () => console.log('WebSocket 信道重连成功'));
-        tunnel.on('error', error => console.error('信道发生错误：', error));
+        tunnel.on('connect', () => {
+            console.log('WebSocket 信道已连接');
+            this.setData({ tunnelStatus: 'connected' });
+        });
+        tunnel.on('close', () => {
+            console.log('WebSocket 信道已断开');
+            this.setData({ tunnelStatus: 'closed' });
+        });
+        tunnel.on('reconnecting', () => {
+            console.log('WebSocket 信道正在重连...')
+            showBusy('正在重连');
+        });
+        tunnel.on('reconnect', () => {
+            console.log('WebSocket 信道重连成功')
+            showSuccess('重连成功');
+        });
+        tunnel.on('error', error => {
+            showModel('信道发生错误', error);
+            console.error('信道发生错误：', error);
+        });
 
         // 监听自定义消息（服务器进行推送）
-        tunnel.on('speak', speak => console.log('收到说话消息：', speak));
+        tunnel.on('speak', speak => {
+            showModel('信道消息', speak);
+            console.log('收到说话消息：', speak);
+        });
 
         // 打开信道
         tunnel.open();
+        this.setData({ tunnelStatus: 'connecting' });
     },
 
     /**
@@ -149,6 +184,7 @@ Page({
         if (this.tunnel) {
             this.tunnel.close();
         }
+        this.setData({ tunnelStatus: 'closed' });
     },
 
     /**
@@ -159,4 +195,6 @@ Page({
         this.closeTunnel();
         wx.navigateTo({ url: '../chat/chat' });
     },
+
+    noop() {}
 });

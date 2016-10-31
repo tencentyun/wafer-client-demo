@@ -1,67 +1,21 @@
 <view class="page-wrap">
-
-    <view class="chat-container">
-
-        <view class="user-message other">
-            <image src="http://119.29.8.64/open_proj/proj_qcloud_v2/wechat_mc/t.jpg" class="avatar"></image>
-            <view class="text">
-                <view class="nickname">路人甲一号</view>
-                <view class="content">
-                    今天天气不错
+    <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">
+        <view wx:for="{{messages}}" wx:for-item="message" wx:key="id" id="{{message.id}}" class="message {{message.type}}">
+            <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.isMe ? 'me' : 'other'}}">
+                <image class="avatar" src="{{message.user.avatarUrl}}" mode="aspectFill"></image>
+                <view class="text">
+                    <view class="nickname">{{message.user.nickName}}</view>
+                    <view class="content">{{message.content}}</view>
                 </view>
             </view>
-        </view>
-
-        <view class="system-message">路人五已经加入群，当前总共99人</view>
-
-        <view class="user-message other">
-            <image src="http://119.29.8.64/open_proj/proj_qcloud_v2/wechat_mc/t.jpg" class="avatar"></image>
-            <view class="text">
-                <view class="nickname">路人甲一号</view>
-                <view class="content">
-                    今天天气不错
-                </view>
+            <view wx:if="{{message.type == 'system'}}" class="system-message">
+                {{message.content}}
             </view>
         </view>
-
-        <view class="user-message me">
-            <image src="http://119.29.8.64/open_proj/proj_qcloud_v2/wechat_mc/t.jpg" class="avatar"></image>
-            <view class="text">
-                <view class="content">
-                    今天天气不错
-                </view>
-            </view>
-        </view>
-
-        <view class="system-message">路人五已经加入群，当前总共99人</view>
-        <view class="user-message me">
-            <image src="http://119.29.8.64/open_proj/proj_qcloud_v2/wechat_mc/t.jpg" class="avatar"></image>
-            <view class="text">
-                <view class="content img">
-                     <image src="http://img.itc.cn/photo/oZiLbRC5TRf" class="msg-img" mode="aspectFill"  ></image>
-                </view>
-            </view>
-        </view>
-
-        <view class="user-message other">
-            <image src="http://119.29.8.64/open_proj/proj_qcloud_v2/wechat_mc/t.jpg" class="avatar"></image>
-            <view class="text">
-                <view class="nickname">路人甲一号</view>
-                <view class="content img">
-                     <image src="http://img.itc.cn/photo/oZiLb86k2Xd" class="msg-img" mode="aspectFill" ></image>
-                </view>
-            </view>
-        </view>
-
-    </view>
-
+    </scroll-view>
     <view class="input-panel">
-        <view class="pic-icon"></view>
-        <input class="send-input" />
-        <button type="primary" class="send-btn"> 发送 </button>
+        <button class="pic-icon"></button>
+        <input type="text" value="{{inputContent}}" bindchange="changeInputContent" class="send-input"></input>
+        <button bindtap="sendMessage" class="send-btn">发送</button>
     </view>
-
 </view>
-
-
-

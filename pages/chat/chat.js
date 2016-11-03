@@ -127,7 +127,7 @@ Page({
         // 有人说话，创建一条消息
         tunnel.on('speak', speak => {
             const { word, who } = speak;
-            this.pushMessage(createUserMessage(word, who, who.openId == this.me.openId));
+            this.pushMessage(createUserMessage(word, who, who.openId === this.me.openId));
         });
 
         // 信道关闭后，显示退出群聊

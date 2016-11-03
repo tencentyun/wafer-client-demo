@@ -1,4 +1,4 @@
-.root{
+.root {
     background: #efeff4;
     position: absolute;
     top: 0;
@@ -6,21 +6,21 @@
     right: 0;
     bottom:0;
 }
-.line{
+.line {
     padding-top: 30rpx;
 }
-.line text{
+.line text {
     color: #6D6D72;
     font-size: 28rpx;
     margin-left: 40rpx;
 }
-.line-control{
+.line-control {
     border-bottom: #d9d9d9 1px solid;
     border-top: #d9d9d9 1px solid;
     background-color: #fff;
     margin-top: 10rpx;
 }
-.line-control .item{
+.line-control .item {
     box-sizing: border-box;
     text-align: left;
     color: #007AFF;
@@ -28,47 +28,47 @@
     padding-left: 40rpx;
     position: relative
 }
-.line-control .item:active{
+.line-control .item:active {
     background: #d9d9d9;
 }
-.line-control .item.flag{
+.line-control .item.flag {
     color: #333;
 }
-.line-control .item.flag:active{
+.line-control .item.flag:active {
     background: #fff;
 }
-.line-control .item-inner{
+.line-control .item-inner {
     border-bottom: #d9d9d9 1px solid;
     height: 90rpx;
     line-height: 90rpx;
 }
-.line-control .item:last-child .item-inner{
+.line-control .item:last-child .item-inner {
      border:none;
 }
-.line-control .switch{
+.line-control .switch {
     vertical-align: middle;
     line-height: normal;
 }
-.line-control text{
+.line-control text {
     display: inline-block;
     vertical-align: middle;
     margin-right: 10rpx;
     color: #8E8E93;
     margin-left: 0;
 }
-.line-control .switch-status{
+.line-control .switch-status {
     color: #999;
     position: absolute;
     right: 40rpx;
     top: 0;
 }
-.line-control .item.disabled{
+.line-control .item.disabled {
     color: #999
 }
-.line-control .item.disabled:active{
+.line-control .item.disabled:active {
     background: none;
 }
-.line .demo{
+.line .demo {
     height: 90rpx;
     line-height: 90rpx;
     box-sizing: border-box;
@@ -79,26 +79,26 @@
     font-size: 32rpx;
     padding-left: 40rpx;
 }
-.line .demo .link{
+.line .demo .link {
     position: absolute;
     right: 40rpx;
     top: 0rpx;
     color: #8E8E93;
 }
-.hide{
+.hide {
     display: none
 }
 
-@media (max-width : 360px){
-        .line text{
+@media (max-width : 360px) {
+    .line text {
         font-size: 36rpx;
     }
-    .line-control .item-inner{
+    .line-control .item-inner {
         border-bottom: #d9d9d9 1px solid;
         height: 110rpx;
         line-height: 110rpx;
     }
-    .line-control .item{
+    .line-control .item {
         height: 110rpx;
         line-height: 110rpx;
         box-sizing: border-box;
@@ -108,8 +108,7 @@
         padding-left: 40rpx;
         position: relative
     }
-
-    .line .demo{
+    .line .demo {
         height: 110rpx;
         line-height: 110rpx;
         font-size: 38rpx;

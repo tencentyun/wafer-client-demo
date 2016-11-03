@@ -175,7 +175,7 @@ Page({
         if (this.tunnel && this.tunnel.isActive()) {
             // 使用信道给服务器推送「speak」消息
             this.tunnel.emit('speak', {
-                'word': 'I say someting at ' + new Date(),
+                'word': 'I say something at ' + new Date(),
             });
         }
     },

@@ -218,10 +218,12 @@ function Tunnel(serviceUrl) {
      * WebSocket 打开之后，更新状态，同时发送所有遗留的数据包
      */
     function handleSocketOpen() {
+        /* istanbul ignore else */
         if (isConnecting()) {
             dispatchEvent('connect');
 
-        } else if (isReconnecting()) {
+        }
+        else if (isReconnecting()) {
             dispatchEvent('reconnect');
             resetReconnectionContext();
         }
@@ -363,6 +365,7 @@ function Tunnel(serviceUrl) {
      */
     function handleTimeoutPacket(packet) {
         var timeout = packet.content * 1000;
+        /* istanbul ignore else */
         if (!isNaN(timeout)) {
             pingPongTimeout = timeout;
             ping();
@@ -389,6 +392,7 @@ function Tunnel(serviceUrl) {
      * 发送 Ping，等待 Pong
      */
     function ping() {
+        /* istanbul ignore else */
         if (isActive()) {
             emitPingPacket();
 
@@ -427,7 +431,8 @@ function Tunnel(serviceUrl) {
                 message: '重连失败',
                 detail: lastError,
             });
-        } else {
+        }
+        else {
             wx.closeSocket();
             waitBeforeReconnect += reconnectTimeIncrease;
             setStatus(STATUS_RECONNECTING);
@@ -467,10 +472,12 @@ function Tunnel(serviceUrl) {
      * 收到 WebSocket 断开的消息，处理断开逻辑
      */
     function handleSocketClose() {
+        /* istanbul ignore if */
         if (isClosing) return;
 
-        // 意外断开的情况，进行重连
+        /* istanbul ignore else */
         if (isActive()) {
+            // 意外断开的情况，进行重连
             startReconnect('链接已断开');
         }
     }
@@ -513,10 +520,6 @@ function Tunnel(serviceUrl) {
                 detail: detail,
             });
             break;
-
-        case Tunnel.STATUS_ACTIVE:
-        case Tunnel.STATUS_RECONNECTING:
-            // TODO
         }
     }
 

@@ -29,8 +29,9 @@ var getWxLoginResult = function getLoginCode(callback) {
                 success: function (userResult) {
                     callback(null, {
                         code: loginResult.code,
-                        encryptData: userResult.encryptData,
-                        userInfo: userResult.userInfo
+                        encryptedData: userResult.encryptedData,
+                        iv: userResult.iv,
+                        userInfo: userResult.userInfo,
                     });
                 },
 
@@ -81,21 +82,25 @@ var login = function login(options) {
             options.fail(wxLoginError);
             return;
         }
-
-        // 构造请求头，包含 code 和 encryptData
-        var code = wxLoginResult.code;
-        var encryptData = wxLoginResult.encryptData;
+        
         var userInfo = wxLoginResult.userInfo;
 
+        // 构造请求头，包含 code、encryptedData 和 iv
+        var code = wxLoginResult.code;
+        var encryptedData = wxLoginResult.encryptedData;
+        var iv = wxLoginResult.iv;
         var header = {};
+
         header[constants.WX_HEADER_CODE] = code;
-        header[constants.WX_HEADER_ENCRYPT_DATA] = encryptData;
+        header[constants.WX_HEADER_ENCRYPTED_DATA] = encryptedData;
+        header[constants.WX_HEADER_IV] = iv;
 
         // 请求服务器登录地址，获得会话信息
         wx.request({
             url: options.loginUrl,
             header: header,
             method: options.method,
+            data: options.data,
 
             success: function (result) {
                 var data = result.data;

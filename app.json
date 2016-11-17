@@ -6,7 +6,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#333",
-        "navigationBarTitleText": "腾讯云微信小程序一站式解决方案",
+        "navigationBarTitleText": "腾讯云小程序解决方案",
         "navigationBarTextStyle": "white"
     }
 }

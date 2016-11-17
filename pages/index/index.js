@@ -22,11 +22,14 @@ var showSuccess = text => wx.showToast({
 });
 
 // 显示失败提示
-var showModel = (title, content) => wx.showModal({
-    title,
-    content: JSON.stringify(content),
-    showCancel: false
-});
+var showModel = (title, content) => {
+    wx.hideToast();
+    wx.showModal({
+        title,
+        content: JSON.stringify(content),
+        showCancel: false
+    });
+};
 
 /**
  * 使用 Page 初始化页面，具体可参考微信公众平台上的文档

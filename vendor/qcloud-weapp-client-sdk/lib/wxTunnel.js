@@ -1,7 +1,9 @@
+/* istanbul ignore next */
 const noop = () => void(0);
 
 let onOpen, onClose, onMessage, onError;
 
+/* istanbul ignore next */
 function listen(listener) {
     if (listener) {
         onOpen = listener.onOpen;
@@ -16,11 +18,15 @@ function listen(listener) {
     }
 }
 
-listen(null);
+/* istanbul ignore next */
+function bind() {
+    wx.onSocketOpen(result => onOpen(result));
+    wx.onSocketClose(result => onClose(result));
+    wx.onSocketMessage(result => onMessage(result));
+    wx.onSocketError(error => onError(error));
+}
 
-wx.onSocketOpen(result => onOpen(result));
-wx.onSocketClose(result => onClose(result));
-wx.onSocketMessage(result => onMessage(result));
-wx.onSocketError(error => onError(error));
+listen(null);
+bind();
 
 module.exports = { listen };

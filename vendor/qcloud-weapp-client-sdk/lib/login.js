@@ -29,7 +29,7 @@ var getWxLoginResult = function getLoginCode(callback) {
                 success: function (userResult) {
                     callback(null, {
                         code: loginResult.code,
-                        encryptData: userResult.encryptData,
+                        encryptData: userResult.encryptData || userResult.encryptedData,
                         userInfo: userResult.userInfo
                     });
                 },

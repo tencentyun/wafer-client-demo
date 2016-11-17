@@ -49,6 +49,8 @@ Page({
      * 页面渲染完成后，启动聊天室
      * */
     onReady() {
+        wx.setNavigationBarTitle({ title: '三木聊天室' });
+
         if (!this.pageReady) {
             this.pageReady = true;
             this.enter();
@@ -59,8 +61,6 @@ Page({
      * 后续后台切换回前台的时候，也要重新启动聊天室
      */
     onShow() {
-        wx.setNavigationBarTitle({ title: '三木聊天室' });
-
         if (this.pageReady) {
             this.enter();
         }
@@ -127,7 +127,7 @@ Page({
         // 有人说话，创建一条消息
         tunnel.on('speak', speak => {
             const { word, who } = speak;
-            this.pushMessage(createUserMessage(word, who, who.openId == this.me.openId));
+            this.pushMessage(createUserMessage(word, who, who.openId === this.me.openId));
         });
 
         // 信道关闭后，显示退出群聊

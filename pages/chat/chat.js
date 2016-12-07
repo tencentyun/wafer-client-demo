@@ -164,8 +164,11 @@ Page({
         var messages = this.data.messages;
         updater(messages);
 
-        var lastMessageId = messages.length && messages[messages.length - 1].id;
-        this.setData({ messages, lastMessageId });
+        this.setData({ messages });
+
+        // 需要先更新 messagess 数据后再设置滚动位置，否则不能生效
+        var lastMessageId = messages.length ? messages[messages.length - 1].id : 'none';
+        this.setData({ lastMessageId });
     },
 
     /**

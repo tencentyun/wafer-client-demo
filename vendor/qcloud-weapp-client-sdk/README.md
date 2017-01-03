@@ -1,19 +1,19 @@
 # 微信小程序客户端腾讯云增强 SDK
 
-[![Build Status](https://travis-ci.org/tencentyun/weapp-client-sdk.svg?branch=master)](https://travis-ci.org/tencentyun/weapp-client-sdk)
-[![Coverage Status](https://coveralls.io/repos/github/tencentyun/weapp-client-sdk/badge.svg?branch=master)](https://coveralls.io/github/tencentyun/weapp-client-sdk?branch=master)
-[![License](http://img.shields.io/npm/l/qcloud-weapp-client-sdk.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/tencentyun/wafer-client-sdk.svg?branch=master)](https://travis-ci.org/tencentyun/wafer-client-sdk)
+[![Coverage Status](https://coveralls.io/repos/github/tencentyun/wafer-client-sdk/badge.svg?branch=master)](https://coveralls.io/github/tencentyun/wafer-client-sdk?branch=master)
+[![License](https://img.shields.io/github/license/tencentyun/wafer-client-sdk.svg)](LICENSE)
 
-本 SDK 是腾讯云[微信小程序一站式解决方案](https://github.com/tencentyun/weapp-solution)的组成部分，为小程序客户端开发提供 SDK 支持会话服务和信道服务。
+本 项目是 [Wafer](https://github.com/tencentyun/wafer-solution) 的组成部分，为小程序客户端开发提供 SDK 支持会话服务和信道服务。
 
 ## SDK 获取与安装
 
-解决方案[客户端 Demo](https://github.com/tencentyun/weapp-client-demo/) 已经集成并使用最新版的 SDK，需要快速了解的可以从 Demo 开始。
+解决方案[客户端 Demo](https://github.com/tencentyun/wafer-client-demo) 已经集成并使用最新版的 SDK，需要快速了解的可以从 Demo 开始。
 
 如果需要单独开始，本 SDK 已经发布为 bower 模块，可以直接安装到小程序目录中。
 
 ```sh
-npm install bower -g
+npm install -g bower
 bower install qcloud-weapp-client-sdk
 ```
 
@@ -25,7 +25,7 @@ var qcloud = require('./bower_components/qcloud-weapp-client-sdk/index.js');
 
 ## 会话服务
 
-[会话服务](https://github.com/tencentyun/weapp-solution/wiki/%E4%BC%9A%E8%AF%9D%E6%9C%8D%E5%8A%A1)让小程序拥有会话管理能力。
+[会话服务](https://github.com/tencentyun/wafer-solution/wiki/%E4%BC%9A%E8%AF%9D%E6%9C%8D%E5%8A%A1)让小程序拥有会话管理能力。
 
 ### 登录
 
@@ -35,13 +35,13 @@ var qcloud = require('./bower_components/qcloud-weapp-client-sdk/index.js');
 var qcloud = require('./bower_components/qcloud-weapp-client-sdk/index.js');
 
 // 设置登录地址
-qcloud.setLoginUrl("https://199447.qcloud.la/login");
+qcloud.setLoginUrl('https://199447.qcloud.la/login');
 qcloud.login({
-    success: function(userInfo) {
-        console.log("登录成功", userInfo);
+    success: function (userInfo) {
+        console.log('登录成功', userInfo);
     },
-    fail: function(err) {
-        console.log("登录失败", err);
+    fail: function (err) {
+        console.log('登录失败', err);
     }
 });
 ```
@@ -58,10 +58,10 @@ qcloud.login({
 ```js
 qcloud.request({
     url: 'http://199447.qcloud.la/user',
-    success: function(response) {
+    success: function (response) {
         console.log(response);
     },
-    fail: function(err) {
+    fail: function (err) {
         console.log(err);
     }
 });
@@ -75,20 +75,20 @@ qcloud.setLoginUrl('https://199447.qcloud.la/login');
 qcloud.request({
     login: true,
     url: 'http://199447.qcloud.la/user',
-    success: function(response) {
+    success: function (response) {
         console.log(response);
     },
-    fail: function(err) {
+    fail: function (err) {
         console.log(err);
     }
 });
 ```
 
-关于会话服务详细技术说明，请参考 [Wiki](https://github.com/tencentyun/weapp-solution/wiki/%E4%BC%9A%E8%AF%9D%E6%9C%8D%E5%8A%A1)。
+关于会话服务详细技术说明，请参考 [Wiki](https://github.com/tencentyun/wafer-solution/wiki/%E4%BC%9A%E8%AF%9D%E6%9C%8D%E5%8A%A1)。
 
 ## 信道服务
 
-[信道服务](https://github.com/tencentyun/weapp-solution/wiki/%E4%BF%A1%E9%81%93%E6%9C%8D%E5%8A%A1)小程序支持利用腾讯云的信道资源使用 WebSocket 服务。
+[信道服务](https://github.com/tencentyun/wafer-solution/wiki/%E4%BF%A1%E9%81%93%E6%9C%8D%E5%8A%A1)小程序支持利用腾讯云的信道资源使用 WebSocket 服务。
 
 ```js
 // 创建信道，需要给定后台服务地址
@@ -114,9 +114,9 @@ tunnel.close();
 
 信道服务同样需要业务服务器配合云端 SDK 支持，构造信道实例的时候需要提供业务服务器提供的信道服务地址。通过监听信道消息以及自定义消息来通过信道实现业务。
 
-关于信道使用的更完整实例，建议参考客户端 Demo 中的[三木聊天室应用源码](https://github.com/tencentyun/weapp-client-demo/blob/master/pages/chat/chat.js)。
+关于信道使用的更完整实例，建议参考客户端 Demo 中的[三木聊天室应用源码](https://github.com/tencentyun/wafer-client-demo/blob/master/pages/chat/chat.js)。
 
-关于信道服务详细技术说明，请参考 [Wiki](https://github.com/tencentyun/weapp-solution/wiki/%E4%BF%A1%E9%81%93%E6%9C%8D%E5%8A%A1)。
+关于信道服务详细技术说明，请参考 [Wiki](https://github.com/tencentyun/wafer-solution/wiki/%E4%BF%A1%E9%81%93%E6%9C%8D%E5%8A%A1)。
 
 ## API
 

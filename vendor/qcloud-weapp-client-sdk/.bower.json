@@ -29,12 +29,12 @@
     ".travis.yml",
     ".gitignore"
   ],
-  "version": "0.8.0",
-  "_release": "0.8.0",
+  "version": "0.8.2",
+  "_release": "0.8.2",
   "_resolution": {
     "type": "version",
-    "tag": "v0.8.0",
-    "commit": "3d27999767b62fb113de47283b0945a85c633254"
+    "tag": "v0.8.2",
+    "commit": "0944545afe0b6bc4aec8c39e8437dbe95a07a8d9"
   },
   "_source": "https://github.com/tencentyun/weapp-client-sdk.git",
   "_target": "*",
